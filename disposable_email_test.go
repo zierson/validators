@@ -11,3 +11,15 @@ func TestIsDisposableEmailProvider(t *testing.T) {
 	assert.False(t, IsDisposableEmailProvider("gmail.com"))
 	assert.False(t, IsDisposableEmailProvider("fastmail.com"))
 }
+
+func TestIsDisposableEmail(t *testing.T) {
+	val, err := IsDisposableEmail("test@nokiamail.com")
+	if assert.NoError(t, err) {
+		assert.True(t, val)
+	}
+
+	val, err = IsDisposableEmail("test@fastmail.com")
+	if assert.NoError(t, err) {
+		assert.False(t, val)
+	}
+}

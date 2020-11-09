@@ -1,6 +1,7 @@
 package validators
 
 import (
+	"github.com/asaskevich/govalidator"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"net/http"
@@ -38,7 +39,7 @@ func IsDisposableEmailProvider(domain string) bool {
 		lines := strings.Split(string(b), "\n")
 		for _, l := range lines {
 			if len(strings.Split(l, ".")) == 0 {
-				panic(errors.Wrap(errors.New("invalid domain name"), "IsDisposableEmail"))
+				panic(errors.WithMessage(errors.New("invalid domain name"), "IsDisposableEmail"))
 			}
 
 			cache_disp = append(cache_disp, strings.TrimSpace(l))
@@ -54,4 +55,21 @@ func IsDisposableEmailProvider(domain string) bool {
 	}
 
 	return false
+}
+
+func IsDisposableEmail(email string) (bool, error) {
+	if !govalidator.IsEmail(email) {
+		return false, errors.WithMessage(errors.New("invalid email format"), "IsDisposableEmail")
+	}
+
+	e := strings.Split(email, "@")
+	if len(e) != 2 {
+		return false, errors.WithMessage(errors.New("invalid email format"), "IsDisposableEmail")
+	}
+
+	if IsDisposableEmailProvider(e[1]) {
+		return true, nil
+	}
+
+	return false, nil
 }
