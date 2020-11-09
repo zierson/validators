@@ -9,8 +9,8 @@ func TestIsSuspiciousIPv4(t *testing.T) {
 	assert.False(t, IsSuspiciousIPv4("130.26.118.215"))
 
 	// failure
-	assert.True(t, IsSuspiciousIPv4("51.77.58.144"))
-	assert.True(t, IsSuspiciousIPv4("185.220.102.250"))
+	assert.True(t, IsSuspiciousIPv4("54.38.81.231"))
+	assert.True(t, IsSuspiciousIPv4("185.220.102.248"))
 }
 
 func TestIsSuspiciousIPv6(t *testing.T) {
