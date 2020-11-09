@@ -9,13 +9,15 @@ import (
 	"time"
 )
 
-var mux sync.Mutex
-var cache []string
+var (
+	mux_susp   sync.Mutex
+	cache_susp []string
+)
 
 func IsSuspiciousIPv4(ipv4 string) bool {
-	if len(cache) == 0 {
-		mux.Lock()
+	mux_susp.Lock()
 
+	if len(cache_susp) == 0 {
 		req, err := http.NewRequest("GET", "https://raw.githubusercontent.com/stamparm/ipsum/master/ipsum.txt", nil)
 		if err != nil {
 			panic(errors.Wrap(err, "IsSuspiciousIPv4"))
@@ -44,13 +46,13 @@ func IsSuspiciousIPv4(ipv4 string) bool {
 				continue
 			}
 
-			cache = append(cache, strings.TrimSpace(ip[0]))
+			cache_susp = append(cache_susp, strings.TrimSpace(ip[0]))
 		}
-
-		mux.Unlock()
 	}
 
-	for _, v := range cache {
+	mux_susp.Unlock()
+
+	for _, v := range cache_susp {
 		if v == ipv4 {
 			return true
 		}
