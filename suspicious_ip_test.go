@@ -6,8 +6,8 @@ import (
 )
 
 func TestIsSuspiciousIPv4(t *testing.T) {
-	assert.True(t, IsSuspiciousIPv4("54.38.81.231"))
-	assert.True(t, IsSuspiciousIPv4("185.220.102.248"))
+	assert.True(t, IsSuspiciousIPv4("141.98.10.125"))
+	assert.True(t, IsSuspiciousIPv4("104.244.78.233"))
 	assert.False(t, IsSuspiciousIPv4("1.1.1.1"))
 	assert.False(t, IsSuspiciousIPv4("130.26.118.215"))
 }

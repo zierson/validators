@@ -20,7 +20,7 @@ func IsSuspiciousIPv4(ipv4 string) bool {
 	if len(cache_susp) == 0 {
 		// Backup list file:
 		// https://raw.githubusercontent.com/zierson/validators/master/data/suspicious_ip.txt
-		req, err := http.NewRequest("GET", "https://raw.githubusercontent.com/stamparm/ipsum/master/suspicious_ip.txt", nil)
+		req, err := http.NewRequest("GET", "https://raw.githubusercontent.com/stamparm/ipsum/master/ipsum.txt", nil)
 		if err != nil {
 			panic(errors.Wrap(err, "IsSuspiciousIPv4"))
 		}
@@ -49,6 +49,10 @@ func IsSuspiciousIPv4(ipv4 string) bool {
 			}
 
 			cache_susp = append(cache_susp, strings.TrimSpace(ip[0]))
+		}
+
+		if len(cache_susp) < 2 {
+			panic(errors.WithMessage(errors.New("no ip loaded"), "IsDisposableEmail"))
 		}
 	}
 
