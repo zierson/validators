@@ -18,7 +18,9 @@ func IsSuspiciousIPv4(ipv4 string) bool {
 	mux_susp.Lock()
 
 	if len(cache_susp) == 0 {
-		req, err := http.NewRequest("GET", "https://raw.githubusercontent.com/stamparm/ipsum/master/ipsum.txt", nil)
+		// Backup list file:
+		// https://raw.githubusercontent.com/zierson/validators/master/data/suspicious_ip.txt
+		req, err := http.NewRequest("GET", "https://raw.githubusercontent.com/stamparm/ipsum/master/suspicious_ip.txt", nil)
 		if err != nil {
 			panic(errors.Wrap(err, "IsSuspiciousIPv4"))
 		}

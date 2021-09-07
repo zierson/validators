@@ -19,7 +19,9 @@ func IsDisposableEmailProvider(domain string) bool {
 	mux_disp.Lock()
 
 	if len(cache_disp) == 0 {
-		req, err := http.NewRequest("GET", "https://raw.githubusercontent.com/martenson/disposable-email-domains/master/disposable_email_blocklist.conf", nil)
+		// Backup list file:
+		// https://raw.githubusercontent.com/zierson/validators/master/data/disposable_email_list.txt
+		req, err := http.NewRequest("GET", "https://raw.githubusercontent.com/martenson/disposable-email-domains/master/disposable_email_list.txt", nil)
 		if err != nil {
 			panic(errors.Wrap(err, "IsDisposableEmail"))
 		}
